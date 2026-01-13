@@ -16,20 +16,26 @@ lsp.ensure_installed({
     "lua_ls",
     "cmake",
     "pyright",
+    --"mypy",
+    "angularls",
+    "dockerls",
 })
 
 lsp.configure("clangd", {
     cmd = { "clangd", "--query-driver=/usr/bin/clang++" },
 })
 
+local util = require("lspconfig.util")
+
 lsp.configure("pyright", {
+    root_dir = util.root_pattern("pyrightconfig.json", "pyproject.toml", ".git"),
     settings = {
         python = {
             analysis = {
-                typeCheckingMode = "off"
+                typeCheckingMode = "basic"
             }
         }
-    }
+    },
 })
 
 local cmp = require("cmp")
